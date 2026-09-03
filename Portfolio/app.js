@@ -1,326 +1,393 @@
-// GSAP plugins are already loaded via CDN in the HTML file
-const gsap = window.gsap // Declare gsap variable
-const ScrollTrigger = window.ScrollTrigger // Declare ScrollTrigger variable
+(() => {
+    "use strict";
 
-//Theme Managment
-const themeToggle=document.getElementById("themeToggle");
-const body=document.body;
+    // =========================================================
+    // GSAP
+    // =========================================================
 
-//check for saved theme perference or default to "dark"
-const currentTheme=localStorage.getItem("theme") || "dark";
-body.setAttribute("data-theme",currentTheme)
+    const gsap = window.gsap;
+    const ScrollTrigger = window.ScrollTrigger;
 
-themeToggle.addEventListener("click",()=>{
-    const currentTheme=body.getAttribute("data-theme")
-    const newTheme=currentTheme === "dark" ? "light" : "dark"
-
-    body.setAttribute("data-theme",newTheme)
-    localStorage.setItem("theme",newTheme)
-
-    //Aniate theme toggle
-    gsap.to(themeToggle,{
-        scale: 0.9,
-        duration: 0.3,
-        yoyo: true,
-        repeat: 1,
-        ease: "power2.inOut",
-    })
-})
-
-
-//Mobile Menu Managment
-const menuToggle =document.getElementById("menuToggle")
-const mobileMenu =document.getElementById("mobileMenu")
-
-menuToggle.addEventListener("click",() => {
-    menuToggle.classList.toggle("active")
-    mobileMenu.classList.toggle("active")
-
-    //Prevent body scroll when menu is open
-    if(mobileMenu.classList.countains("active")){
-        body.style.overflow="hidden"
-    } else{
-        body.style.overflow=""
+    if (gsap && ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
     }
-})
 
-//Loading Animation
-function initLoader() {
-     const loader = document.querySelector(".loader")
-     const loaderText = document.querySelector(".loader-text")
-     const LoaderProgress = document.querySelector(".loader-progress")
+    // =========================================================
+    // DOM
+    // =========================================================
 
-     // animation loader text
-     gsap.to(loaderText,{
-         opacity: 1,
-         duration: 0.7,
-         ease: "power2.out",
-     })
+    const body = document.body;
 
-     // animation progress bar
-     gsap.to(LoaderProgress,{
-         width: "100%",
-         duration: 2,
-         ease: "power2.inOut",
-         onComplete: () => {
-             gsap.to(loader,{
-                 opacity:0,
-                 duration: 0.7,
-                 onComplete:() => {
-                     loader.style.display = "none"
-                     initAnimations()
-                }
-           })
-      }
- })
-}
+    const themeToggle = document.getElementById("themeToggle");
+    const menuToggle = document.getElementById("menuToggle");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const contactForm = document.getElementById("contactForm");
 
-//initialize loader on page load
- window.addEventListener("load", initLoader)
+    // =========================================================
+    // THEME
+    // =========================================================
 
-//custom cursor (only on desktop)
-if(window.innerWidth>768){
-    const cursor = document.querySelector(".cursor")
-    const cursorFollower = document.querySelector(".cursor-follower")
+    const savedTheme = localStorage.getItem("theme");
 
-    document.addEventListener("mouseover", (e) => {
-        gsap.to(cursor, {
-            x: e.clientX - 10,
-            y: e.clientY - 10,
-            duration: 0.1,
-        })
+    if (savedTheme === "light" || savedTheme === "dark") {
+        body.dataset.theme = savedTheme;
+    } else {
+        body.dataset.theme = "dark";
+    }
 
-        gsap.to(cursorFollower, {
-            x: e.clientX - 20,
-            y: e.clientY - 20,
-            duration: 0.2,
-        })
-    })
-}
+    if (themeToggle) {
+        themeToggle.addEventListener("click", () => {
+            const newTheme =
+                body.dataset.theme === "dark" ? "light" : "dark";
 
-//initialize all animations
-function initAnimations(){
-//Navigation animation
-    gsap.to("nav",{
-        y:0,
-        duration: 1,
-         ease: "power3.out",
-     })
- 
+            body.dataset.theme = newTheme;
+            localStorage.setItem("theme", newTheme);
 
-const heroTl = gsap.timeline()
-heroTl
-.to(".hero-title", {
-    opacity:1,
-    filter:'blur(0px)',
-    y:0,
-    duration:1.2,
-    ease: "power3.out",
-})
-.to(".hero-subtitle", {
-    opacity:1,
-    filter:'blur(0px)',
-    y:0,
-    duration:0.8,
-    ease: "power3.out",
-}, "-=0.5")
-.to(".hero-description", {
-    opacity:1,
-    filter:'blur(0px)',
-    y:0,
-    duration:0.8,
-    ease: "power3.out",
-}, "-=0.3")
-.to(".cta-button", {
-    opacity:1,
-    filter:'blur(0px)',
-    y:0,
-    duration:0.8,
-    ease: "power3.out",
-}, "-=0.3")
-}
-
-// Animation pour la section About
-function initAboutAnimations() {
-    // Animation des éléments de la section About
-    const aboutTitle = document.querySelector('.about-title');
-    const aboutText = document.querySelector('.about-text');
-    const statItems = document.querySelectorAll('.stat-item');
-    const visualContainer = document.querySelector('.visual-container');
-    
-    // Timeline pour les animations
-    const aboutTl = gsap.timeline({
-        scrollTrigger: {
-            trigger: '#about',
-            start: 'top 70%',
-            end: 'bottom 30%',
-            toggleActions: 'play none none reverse'
-        }
-    });
-    
-    aboutTl
-        .to(aboutTitle, {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            ease: 'power3.out'
-        })
-        .to(aboutText, {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out'
-        }, '-=0.5')
-        .to(visualContainer, {
-            opacity: 1,
-            x: 0,
-            duration: 1,
-            ease: 'power3.out'
-        }, '-=0.3')
-        .to(statItems, {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            stagger: 0.1,
-            ease: 'power3.out'
-        }, '-=0.5');
-}
-
-// Initialiser les animations après le chargement de la page
-document.addEventListener('DOMContentLoaded', function() {
-    // Attendre que les animations principales soient initialisées
-    setTimeout(initAboutAnimations, 1000);
-});
-
-
-
-// Animations pour les sections Skills et Projects
-function initSkillsProjectsAnimations() {
-    // Animation pour la section Skills
-    const skillsTitle = document.querySelector('.skills-title');
-    const skillsTrack = document.querySelector('.skills-track');
-    
-    gsap.to(skillsTitle, {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        scrollTrigger: {
-            trigger: '#skills',
-            start: 'top 70%',
-            end: 'bottom 30%',
-            toggleActions: 'play none none reverse'
-        }
-    });
-    
-    // Animation pour la section Projects
-    const projectsTitle = document.querySelector('.projects-title');
-    const projectCards = document.querySelectorAll('.project-card');
-    
-    gsap.to(projectsTitle, {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        scrollTrigger: {
-            trigger: '#projects',
-            start: 'top 70%',
-            end: 'bottom 30%',
-            toggleActions: 'play none none reverse'
-        }
-    });
-    
-    projectCards.forEach((card, index) => {
-        gsap.to(card, {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            delay: index * 0.2,
-            scrollTrigger: {
-                trigger: card,
-                start: 'top 80%',
-                end: 'bottom 20%',
-                toggleActions: 'play none none reverse'
+            if (gsap) {
+                gsap.fromTo(
+                    themeToggle,
+                    { scale: 0.9 },
+                    {
+                        scale: 1,
+                        duration: 0.25,
+                        ease: "power2.out"
+                    }
+                );
             }
         });
-    });
-}
+    }
 
-// Initialiser les animations après le chargement de la page
-document.addEventListener('DOMContentLoaded', function() {
-    // Attendre que les animations principales soient initialisées
-    setTimeout(initSkillsProjectsAnimations, 1000);
-});
-// Animations pour la section Contact et Footer
-function initContactFooterAnimations() {
-    // Animation pour la section Contact
-    const contactTitle = document.querySelector('.contact-title');
-    const contactText = document.querySelector('.contact-text');
-    const contactItems = document.querySelectorAll('.contact-item');
-    const contactForm = document.querySelector('.contact-form-container');
-    
-    const contactTl = gsap.timeline({
-        scrollTrigger: {
-            trigger: '#contact',
-            start: 'top 70%',
-            end: 'bottom 30%',
-            toggleActions: 'play none none reverse'
+    // =========================================================
+    // MOBILE MENU
+    // =========================================================
+
+    function closeMobileMenu() {
+        if (!menuToggle || !mobileMenu) return;
+
+        menuToggle.classList.remove("active");
+        mobileMenu.classList.remove("active");
+        body.classList.remove("menu-open");
+    }
+
+    if (menuToggle && mobileMenu) {
+
+        menuToggle.addEventListener("click", () => {
+
+            const isOpen = mobileMenu.classList.toggle("active");
+
+            menuToggle.classList.toggle("active", isOpen);
+            body.classList.toggle("menu-open", isOpen);
+
+        });
+
+        mobileMenu.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", closeMobileMenu);
+        });
+    }
+
+    // =========================================================
+    // DESKTOP CUSTOM CURSOR
+    // =========================================================
+
+    const isDesktop =
+        window.matchMedia("(pointer: fine)").matches &&
+        window.innerWidth > 768;
+
+    if (isDesktop && gsap) {
+
+        const cursor = document.querySelector(".cursor");
+        const follower = document.querySelector(".cursor-follower");
+
+        if (cursor && follower) {
+
+            let mouseX = 0;
+            let mouseY = 0;
+
+            let followerX = 0;
+            let followerY = 0;
+
+            window.addEventListener(
+                "mousemove",
+                (event) => {
+                    mouseX = event.clientX;
+                    mouseY = event.clientY;
+
+                    gsap.set(cursor, {
+                        x: mouseX - 10,
+                        y: mouseY - 10
+                    });
+                },
+                { passive: true }
+            );
+
+            gsap.ticker.add(() => {
+
+                followerX += (mouseX - followerX) * 0.15;
+                followerY += (mouseY - followerY) * 0.15;
+
+                gsap.set(follower, {
+                    x: followerX - 20,
+                    y: followerY - 20
+                });
+
+            });
+
+            // Hover effects
+            document
+                .querySelectorAll("a, button, .skill-item, .project-card")
+                .forEach(element => {
+
+                    element.addEventListener("mouseenter", () => {
+                        gsap.to(follower, {
+                            scale: 1.5,
+                            duration: 0.2,
+                            overwrite: true
+                        });
+                    });
+
+                    element.addEventListener("mouseleave", () => {
+                        gsap.to(follower, {
+                            scale: 1,
+                            duration: 0.2,
+                            overwrite: true
+                        });
+                    });
+
+                });
         }
-    });
-    
-    contactTl
-        .to(contactTitle, {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            ease: 'power3.out'
-        })
-        .to(contactText, {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out'
-        }, '-=0.5')
-        .to(contactForm, {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            ease: 'power3.out'
-        }, '-=0.3')
-        .to(contactItems, {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            stagger: 0.1,
-            ease: 'power3.out'
-        }, '-=0.5');
-}
+    }
 
-// Gestion du formulaire de contact
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const submitBtn = this.querySelector('.submit-btn');
-    const originalText = submitBtn.innerHTML;
-    
-    // Animation d'envoi
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
-    submitBtn.disabled = true;
-    
-    // Simulation d'envoi (remplacer par votre logique d'envoi d'email)
-    setTimeout(() => {
-        submitBtn.innerHTML = '<i class="fas fa-check"></i> Message envoyé !';
-        submitBtn.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
-        
-        setTimeout(() => {
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-            submitBtn.style.background = 'linear-gradient(135deg, var(--color), var(--accent))';
-            this.reset();
-        }, 2000);
-    }, 2000);
-});
+    // =========================================================
+    // HERO ANIMATION
+    // =========================================================
 
-// Initialiser les animations après le chargement de la page
-document.addEventListener('DOMContentLoaded', function() {
-    // Attendre que les animations principales soient initialisées
-    setTimeout(initContactFooterAnimations, 1000);
-});
+    function initHero() {
+
+        if (!gsap) return;
+
+        const elements = [
+            ".hero-title",
+            ".hero-subtitle",
+            ".hero-description",
+            ".cta-button"
+        ];
+
+        gsap.to("nav", {
+            y: 0,
+            duration: 0.7,
+            ease: "power3.out"
+        });
+
+        const timeline = gsap.timeline();
+
+        timeline
+            .to(".hero-title", {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+                duration: 0.8,
+                ease: "power3.out"
+            })
+            .to(".hero-subtitle", {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+                duration: 0.6,
+                ease: "power3.out"
+            }, "-=0.4")
+            .to(".hero-description", {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+                duration: 0.6,
+                ease: "power3.out"
+            }, "-=0.3")
+            .to(".cta-button", {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+                duration: 0.6,
+                ease: "power3.out"
+            }, "-=0.3");
+    }
+
+    // =========================================================
+    // SCROLL ANIMATIONS
+    // =========================================================
+
+    function animateSection(selector, options = {}) {
+
+        if (!gsap || !ScrollTrigger) return;
+
+        const elements = document.querySelectorAll(selector);
+
+        if (!elements.length) return;
+
+        gsap.fromTo(
+            elements,
+            {
+                opacity: 0,
+                y: options.y || 30
+            },
+            {
+                opacity: 1,
+                y: 0,
+                duration: options.duration || 0.7,
+                stagger: options.stagger || 0.08,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: options.trigger || elements[0],
+                    start: options.start || "top 85%",
+                    once: true
+                }
+            }
+        );
+    }
+
+    function initScrollAnimations() {
+
+        animateSection(".about-title", {
+            trigger: "#about"
+        });
+
+        animateSection(".about-text", {
+            trigger: "#about",
+            delay: 0.1
+        });
+
+        animateSection(".stat-item", {
+            trigger: ".about-stats",
+            stagger: 0.08
+        });
+
+        animateSection(".visual-container", {
+            trigger: ".visual-container",
+            y: 40
+        });
+
+        animateSection(".skills-title", {
+            trigger: "#skills"
+        });
+
+        animateSection(".skill-item", {
+            trigger: ".skills-scroll-container",
+            stagger: 0.05
+        });
+
+        animateSection(".projects-title", {
+            trigger: "#projects"
+        });
+
+        animateSection(".project-card", {
+            trigger: ".projects-grid",
+            stagger: 0.12
+        });
+
+        animateSection(".contact-title", {
+            trigger: "#contact"
+        });
+
+        animateSection(".contact-text", {
+            trigger: "#contact"
+        });
+
+        animateSection(".contact-item", {
+            trigger: ".contact-details",
+            stagger: 0.08
+        });
+
+        animateSection(".contact-form-container", {
+            trigger: ".contact-form-container",
+            y: 40
+        });
+    }
+
+    // =========================================================
+    // CONTACT FORM
+    // =========================================================
+
+    if (contactForm) {
+
+        contactForm.addEventListener("submit", async (event) => {
+
+            event.preventDefault();
+
+            const button = contactForm.querySelector(".submit-btn");
+
+            if (!button) return;
+
+            const originalContent = button.innerHTML;
+
+            button.disabled = true;
+            button.innerHTML =
+                '<i class="fas fa-spinner fa-spin"></i> Envoi...';
+
+            // Simulation temporaire
+            await new Promise(resolve =>
+                setTimeout(resolve, 1000)
+            );
+
+            button.innerHTML =
+                '<i class="fas fa-check"></i> Message envoyé !';
+
+            setTimeout(() => {
+
+                button.innerHTML = originalContent;
+                button.disabled = false;
+
+                contactForm.reset();
+
+            }, 1800);
+        });
+    }
+
+    // =========================================================
+    // REDUCE MOTION
+    // =========================================================
+
+    const prefersReducedMotion =
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // =========================================================
+    // INITIALIZATION
+    // =========================================================
+
+    function init() {
+
+        if (prefersReducedMotion) {
+
+            document.body.classList.add("reduce-motion");
+
+            document.querySelectorAll(
+                ".hero-title, .hero-subtitle, .hero-description, .cta-button"
+            ).forEach(element => {
+
+                element.style.opacity = "1";
+                element.style.transform = "none";
+                element.style.filter = "none";
+
+            });
+
+            return;
+        }
+
+        initHero();
+        initScrollAnimations();
+
+        if (ScrollTrigger) {
+            ScrollTrigger.refresh();
+        }
+    }
+
+    // IMPORTANT:
+    // On ne bloque plus le site avec un loader de plusieurs secondes.
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init, {
+            once: true
+        });
+    } else {
+        init();
+    }
+
+})();
