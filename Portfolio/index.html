@@ -1,556 +1,1201 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mohamed Aziz Cherni</title>
-    <!-- Font from google fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-    <!-- Font Awesome pour les icônes -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Portfolio de Mohamed Aziz Cherni - Développeur Full Stack et étudiant en Data Analysis & Business Intelligence."
+    >
+
+    <meta
+        name="theme-color"
+        content="#0b0d10"
+    >
+
+    <title>Mohamed Aziz Cherni | Full Stack Developer</title>
+
+    <!--
+        IMPORTANT :
+        On évite Google Fonts pour accélérer le premier chargement.
+        Le CSS utilise une police système.
+    -->
+
     <link rel="stylesheet" href="style.css">
+
+    <!--
+        GSAP chargé avec defer :
+        le HTML peut être affiché avant l'exécution du JS.
+    -->
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
+        defer
+    ></script>
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"
+        defer
+    ></script>
+
+    <script src="app.js" defer></script>
 </head>
+
 <body>
-    <!-- Loading Screen -->
-    <div class="loader">
-        <div class="loader-text">Loading...</div>
-        <div class="loader-bar">
-            <div class="loader-progress"></div>
-        </div>
-    </div>
-    <!-- Custom Cursor -->
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <div class="logo">Portfolio.</div>
 
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+    <!-- =====================================================
+         NAVIGATION
+    ====================================================== -->
 
-            <div style="display: flex; align-items: center;">
-                <div class="theme-toggle" id="themeToggle">
-                    <span class="theme-toggle-icon moon">🌙</span>
-                    <span class="theme-toggle-icon sun">☀️</span>
-                </div>
+    <header class="site-header">
+
+        <nav class="navbar" aria-label="Navigation principale">
+
+            <a href="#home" class="logo">
+                <span>AZIZ</span>
+                <small>CHERNI</small>
+            </a>
+
+            <div class="nav-links">
+
+                <a href="#home" class="nav-link active">
+                    Home
+                </a>
+
+                <a href="#about" class="nav-link">
+                    About
+                </a>
+
+                <a href="#skills" class="nav-link">
+                    Skills
+                </a>
+
+                <a href="#projects" class="nav-link">
+                    Projects
+                </a>
+
+                <a href="#contact" class="nav-link">
+                    Contact
+                </a>
+
             </div>
-            <div class="menu-toggle" id="menuToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
+            <div class="nav-actions">
+
+                <!-- Theme -->
+                <button
+                    id="themeToggle"
+                    class="theme-toggle"
+                    type="button"
+                    aria-label="Changer le thème"
+                    title="Changer le thème"
+                >
+                    <span class="theme-icon">☼</span>
+                </button>
+
+                <!-- Mobile menu -->
+                <button
+                    id="menuToggle"
+                    class="menu-toggle"
+                    type="button"
+                    aria-label="Ouvrir le menu"
+                    aria-expanded="false"
+                    aria-controls="mobileMenu"
+                >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =====================================================
+         MOBILE MENU
+    ====================================================== -->
+
+    <div
+        id="mobileMenu"
+        class="mobile-menu"
+        aria-hidden="true"
+    >
+
         <a href="#home">Home</a>
         <a href="#about">About</a>
         <a href="#skills">Skills</a>
         <a href="#projects">Projects</a>
         <a href="#contact">Contact</a>
+
     </div>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-bg"></div>
 
-        <div class="hero-content">
-            <h1 class="hero-title">Mohamed Aziz Cherni</h1>
-            <h2 class="hero-subtitle">FullStack Developper</h2>
-            <p class="hero-description">🚀 Full Stack Developer | Passionné par le Web & l’IA | Toujours en quête de nouvelles technologies et projets innovants</p>
-                <a href="#projects" class="cta-button">View My Work</a>
-        </div>
-        <img class="hero-img" src="images/profile3.png" alt="profile-img">
-        <spline-viewer class="hero-3d-model" url="https://prod.spline.design/42NpQqhx9dTyZZ4p/scene.splinecode"></spline-viewer>
-    </section>
-    <!-- About section -->
-    <section id="about">
-        <div class="about-bg-elements">
-            <div class="bg-circle circle-1"></div>
-            <div class="bg-circle circle-2"></div>
-        </div>
-        
-        <div class="about-container">
-            <div class="about-content">
-                <h2 class="about-title">À propos de moi</h2>
-                
-                <div class="about-text">
-                    <p>Je suis Mohamed Aziz Cherni, un développeur FullStack passionné avec une expertise dans la création d'applications web modernes et performantes. Mon approche combine créativité et rigueur technique pour livrer des solutions qui répondent parfaitement aux besoins des utilisateurs.</p>
-                    
-                    <p>Avec une solide expérience dans les technologies front-end et back-end, je m'efforce de créer des expériences digitales mémorables tout en maintenant un code propre, maintenable et évolutif.</p>
-                </div>
-                
-                <div class="about-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">3+</div>
-                        <div class="stat-label">Années d'expérience</div>
-                    </div>
-                    
-                    <div class="stat-item">
-                        <div class="stat-number">20+</div>
-                        <div class="stat-label">Projets réalisés</div>
-                    </div>
-                    
-                    <div class="stat-item">
-                        <div class="stat-number">15+</div>
-                        <div class="stat-label">Clients satisfaits</div>
-                    </div>
-                    
-                    <div class="stat-item">
-                        <div class="stat-number">10+</div>
-                        <div class="stat-label">Technologies maîtrisées</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="about-visual">
-                <div class="visual-container">
-                    <div class="floating-element element-1">
-                        <div class="element-icon">🚀</div>
-                        <div class="element-text">Performance</div>
-                    </div>
-                    
-                    <div class="floating-element element-2">
-                        <div class="element-icon">💡</div>
-                        <div class="element-text">Innovation</div>
-                    </div>
-                    
-                    <div class="floating-element element-3">
-                        <div class="element-icon">⚡</div>
-                        <div class="element-text">Rapidité</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Skills Section -->
-    <section id="skills">
-        <div class="skills-bg-elements">
-            <div class="bg-circle skills-circle-1"></div>
-            <div class="bg-circle skills-circle-2"></div>
-        </div>
-        
-        <div class="skills-container">
-            <h2 class="skills-title">Mes Compétences</h2>
-            
-            <div class="skills-scroll-container">
-                <div class="skills-track">
-                    <!-- Premier set de compétences -->
-                    <div class="skill-item">
-                        <div class="skill-icon">
-                            <i class="fab fa-html5"></i>
-                        </div>
-                        <div class="skill-name">HTML5</div>
-                        <div class="skill-level">
-                            <div class="skill-progress" style="width: 95%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-item">
-                        <div class="skill-icon">
-                            <i class="fab fa-css3-alt"></i>
-                        </div>
-                        <div class="skill-name">CSS3</div>
-                        <div class="skill-level">
-                            <div class="skill-progress" style="width: 90%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-item">
-                        <div class="skill-icon">
-                            <i class="fab fa-js"></i>
-                        </div>
-                        <div class="skill-name">JavaScript</div>
-                        <div class="skill-level">
-                            <div class="skill-progress" style="width: 88%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-item">
-                        <div class="skill-icon">
-                            <i class="fab fa-react"></i>
-                        </div>
-                        <div class="skill-name">React.js</div>
-                        <div class="skill-level">
-                            <div class="skill-progress" style="width: 85%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-item">
-                        <div class="skill-icon">
-                            <i class="fab fa-node-js"></i>
-                        </div>
-                        <div class="skill-name">Node.js</div>
-                        <div class="skill-level">
-                            <div class="skill-progress" style="width: 82%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-item">
-                        <div class="skill-icon">
-                            <i class="fab fa-python"></i>
-                        </div>
-                        <div class="skill-name">Python</div>
-                        <div class="skill-level">
-                            <div class="skill-progress" style="width: 80%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-item">
-                        <div class="skill-icon">
-                            <i class="fas fa-database"></i>
-                        </div>
-                        <div class="skill-name">MongoDB</div>
-                        <div class="skill-level">
-                            <div class="skill-progress" style="width: 78%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-item">
-                        <div class="skill-icon">
-                            <i class="fas fa-database"></i>
-                        </div>
-                        <div class="skill-name">MySQL</div>
-                        <div class="skill-level">
-                            <div class="skill-progress" style="width: 75%"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Duplication pour l'effet de scroll infini -->
-                    <div class="skill-item">
-                        <div class="skill-icon">
-                            <i class="fab fa-html5"></i>
-                        </div>
-                        <div class="skill-name">HTML5</div>
-                        <div class="skill-level">
-                            <div class="skill-progress" style="width: 95%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-item">
-                        <div class="skill-icon">
-                            <i class="fab fa-css3-alt"></i>
-                        </div>
-                        <div class="skill-name">CSS3</div>
-                        <div class="skill-level">
-                            <div class="skill-progress" style="width: 90%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-item">
-                        <div class="skill-icon">
-                            <i class="fab fa-js"></i>
-                        </div>
-                        <div class="skill-name">JavaScript</div>
-                        <div class="skill-level">
-                            <div class="skill-progress" style="width: 88%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-item">
-                        <div class="skill-icon">
-                            <i class="fab fa-react"></i>
-                        </div>
-                        <div class="skill-name">React.js</div>
-                        <div class="skill-level">
-                            <div class="skill-progress" style="width: 85%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-item">
-                        <div class="skill-icon">
-                            <i class="fab fa-node-js"></i>
-                        </div>
-                        <div class="skill-name">Node.js</div>
-                        <div class="skill-level">
-                            <div class="skill-progress" style="width: 82%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-item">
-                        <div class="skill-icon">
-                            <i class="fab fa-python"></i>
-                        </div>
-                        <div class="skill-name">Python</div>
-                        <div class="skill-level">
-                            <div class="skill-progress" style="width: 80%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-item">
-                        <div class="skill-icon">
-                            <i class="fas fa-database"></i>
-                        </div>
-                        <div class="skill-name">MongoDB</div>
-                        <div class="skill-level">
-                            <div class="skill-progress" style="width: 78%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-item">
-                        <div class="skill-icon">
-                            <i class="fas fa-database"></i>
-                        </div>
-                        <div class="skill-name">MySQL</div>
-                        <div class="skill-level">
-                            <div class="skill-progress" style="width: 75%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
 
-    <!-- Projects Section -->
-    <section id="projects">
-        <div class="projects-bg-elements">
-            <div class="bg-circle projects-circle-1"></div>
-            <div class="bg-circle projects-circle-2"></div>
-        </div>
-        
-        <div class="projects-container">
-            <h2 class="projects-title">Mes Projets</h2>
-            
-            <div class="projects-grid">
-                <!-- Projet 1 -->
-                <div class="project-card">
-                    <div class="project-image"></div>
-                    <div class="project-content">
-                        <h3 class="project-title">Application E-commerce</h3>
-                        <p class="project-description">
-                            Une application e-commerce complète avec panier, paiement sécurisé et dashboard administrateur.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-item">React</span>
-                            <span class="tech-item">Node.js</span>
-                            <span class="tech-item">MongoDB</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="#" class="project-link link-github">
-                                <i class="fab fa-github"></i>
-                                Code Source
-                            </a>
-                            <a href="#" class="project-link link-demo">
-                                <i class="fas fa-external-link-alt"></i>
-                                Voir le Projet
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Projet 2 -->
-                <div class="project-card">
-                    <div class="project-image"></div>
-                    <div class="project-content">
-                        <h3 class="project-title">Plateforme de Réservation</h3>
-                        <p class="project-description">
-                            Système de réservation en temps réel avec calendrier interactif et notifications.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-item">Vue.js</span>
-                            <span class="tech-item">Express</span>
-                            <span class="tech-item">MySQL</span>
-                            <span class="tech-item">Socket.io</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="#" class="project-link link-github">
-                                <i class="fab fa-github"></i>
-                                Code Source
-                            </a>
-                            <a href="#" class="project-link link-demo">
-                                <i class="fas fa-external-link-alt"></i>
-                                Voir le Projet
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Projet 3 -->
-                <div class="project-card">
-                    <div class="project-image"></div>
-                    <div class="project-content">
-                        <h3 class="project-title">Application de Gestion</h3>
-                        <p class="project-description">
-                            Outil de gestion de projet avec tableaux Kanban, chat en temps réel et rapports.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-item">Angular</span>
-                            <span class="tech-item">Python</span>
-                            <span class="tech-item">PostgreSQL</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="#" class="project-link link-github">
-                                <i class="fab fa-github"></i>
-                                Code Source
-                            </a>
-                            <a href="#" class="project-link link-demo">
-                                <i class="fas fa-external-link-alt"></i>
-                                Voir le Projet
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="contact-bg-elements">
-            <div class="bg-circle contact-circle-1"></div>
-            <div class="bg-circle contact-circle-2"></div>
-        </div>
-        
-        <div class="contact-container">
-            <div class="contact-info">
-                <h2 class="contact-title">Contactez-moi</h2>
-                
-                <div class="contact-text">
-                    <p>Vous avez un projet en tête ? N'hésitez pas à me contacter. Je serais ravi de discuter de vos idées et de voir comment je peux vous aider à les concrétiser.</p>
-                    
-                    <p>Je réponds généralement dans les 24 heures. Travaillons ensemble pour créer quelque chose d'extraordinaire !</p>
-                </div>
-                
-                <div class="contact-details">
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="contact-detail-text">
-                            <div class="contact-detail-title">Email</div>
-                            <div class="contact-detail-value">cherniaziz071@gmaail.com</div>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div class="contact-detail-text">
-                            <div class="contact-detail-title">Téléphone</div>
-                            <div class="contact-detail-value">+216 20 853 994</div>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="contact-detail-text">
-                            <div class="contact-detail-title">Localisation</div>
-                            <div class="contact-detail-value">Tunis, Tunisie</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="contact-form-container">
-                <form class="contact-form" id="contactForm">
-                    <div class="form-group">
-                        <div class="form-group half">
-                            <input type="text" class="form-input" placeholder="Votre prénom" required>
-                        </div>
-                        <div class="form-group half">
-                            <input type="text" class="form-input" placeholder="Votre nom" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <input type="email" class="form-input" placeholder="Votre adresse email" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <textarea class="form-input form-textarea" placeholder="Décrivez votre projet..." required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">
-                        <i class="fas fa-paper-plane"></i>
-                        Envoyer le message
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
+    <main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <div class="footer-logo">Portfolio.</div>
-                    <p class="footer-description">
-                        Développeur FullStack passionné par la création d'expériences web modernes et performantes.
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <section
+            id="home"
+            class="hero section"
+        >
+
+            <!-- Background -->
+            <div class="hero-background" aria-hidden="true">
+                <div class="grid-background"></div>
+
+                <div class="bg-circle circle-1"></div>
+                <div class="bg-circle circle-2"></div>
+            </div>
+
+
+            <!--
+                Spline est volontairement chargé dynamiquement
+                par JavaScript sur desktop.
+            -->
+            <div
+                id="splineContainer"
+                class="spline-container"
+                aria-hidden="true"
+            ></div>
+
+
+            <div class="container hero-container">
+
+                <div class="hero-content">
+
+                    <p class="hero-label">
+                        <span class="status-dot"></span>
+                        Available for opportunities
                     </p>
-                    <div class="social-links">
-                        <a href="#" class="social-link">
-                            <i class="fab fa-github"></i>
+
+                    <h1 class="hero-title">
+
+                        Mohamed Aziz
+
+                        <span>Cherni</span>
+
+                    </h1>
+
+                    <p class="hero-subtitle">
+                        Full Stack Developer
+                        <span class="separator">·</span>
+                        Data &amp; Business Intelligence
+                    </p>
+
+                    <p class="hero-description">
+                        Je transforme des idées et des besoins métiers
+                        en applications web modernes, performantes
+                        et intelligentes.
+                    </p>
+
+
+                    <div class="hero-actions">
+
+                        <a
+                            href="#projects"
+                            class="cta-button primary"
+                        >
+                            <span>Voir mes projets</span>
+                            <span class="arrow">→</span>
                         </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-linkedin-in"></i>
+
+                        <a
+                            href="#contact"
+                            class="cta-button secondary"
+                        >
+                            Me contacter
                         </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-instagram"></i>
-                        </a>
+
                     </div>
+
+
+                    <div class="hero-socials">
+
+                        <a
+                            href="#"
+                            aria-label="LinkedIn"
+                            class="social-link"
+                        >
+                            in
+                        </a>
+
+                        <a
+                            href="#"
+                            aria-label="GitHub"
+                            class="social-link"
+                        >
+                            GH
+                        </a>
+
+                        <a
+                            href="#"
+                            aria-label="Facebook"
+                            class="social-link"
+                        >
+                            f
+                        </a>
+
+                    </div>
+
                 </div>
-                
-                <div class="footer-links">
-                    <h4>Navigation</h4>
-                    <ul>
-                        <li><a href="#home"><i class="fas fa-chevron-right"></i> Accueil</a></li>
-                        <li><a href="#about"><i class="fas fa-chevron-right"></i> À propos</a></li>
-                        <li><a href="#skills"><i class="fas fa-chevron-right"></i> Compétences</a></li>
-                        <li><a href="#projects"><i class="fas fa-chevron-right"></i> Projets</a></li>
-                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
-                    </ul>
+
+
+                <!-- Profile -->
+                <div class="hero-profile">
+
+                    <div class="profile-glow"></div>
+
+                    <div class="profile-frame">
+
+                        <img
+                            src="images/profile3.png"
+                            alt="Mohamed Aziz Cherni"
+                            width="500"
+                            height="600"
+                            fetchpriority="high"
+                            decoding="async"
+                        >
+
+                    </div>
+
+                    <div class="profile-decoration decoration-1"></div>
+                    <div class="profile-decoration decoration-2"></div>
+
                 </div>
-                
-                <div class="footer-links">
-                    <h4>Services</h4>
-                    <ul>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Développement Web</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Applications Mobile</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> UI/UX Design</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Consultation</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-contact">
-                    <h4>Contact</h4>
-                    <p><i class="fas fa-envelope"></i> cherniaziz071@gmail.com</p>
-                    <p><i class="fas fa-phone"></i> +216 20 853 994</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Tunis, Tunisie</p>
-                </div>
+
             </div>
-            
-            <div class="footer-bottom">
-                <div class="copyright">
-                    &copy; 2025 Mohamed Aziz Cherni. Tous droits réservés.
+
+
+            <a
+                href="#about"
+                class="scroll-indicator"
+                aria-label="Voir la section About"
+            >
+                <span>Scroll</span>
+                <span class="scroll-line"></span>
+            </a>
+
+        </section>
+
+
+        <!-- =================================================
+             ABOUT
+        ================================================== -->
+
+        <section
+            id="about"
+            class="about section"
+        >
+
+            <div class="container">
+
+                <div class="section-header">
+
+                    <span class="section-number">
+                        01
+                    </span>
+
+                    <div>
+
+                        <p class="section-label">
+                            À propos de moi
+                        </p>
+
+                        <h2 class="section-title">
+                            Je construis des solutions
+                            <span>digitales.</span>
+                        </h2>
+
+                    </div>
+
                 </div>
-                <div class="footer-bottom-links">
-                    <a href="#">Politique de confidentialité</a>
-                    <a href="#">Conditions d'utilisation</a>
+
+
+                <div class="about-grid">
+
+                    <div class="about-content">
+
+                        <p class="about-intro">
+                            Je suis Mohamed Aziz Cherni,
+                            développeur passionné par la création
+                            d'applications web et par les nouvelles
+                            technologies.
+                        </p>
+
+                        <p class="about-text">
+                            Mon parcours en Développement des Systèmes
+                            d'Information m'a permis d'acquérir des
+                            compétences en développement frontend,
+                            backend, bases de données et architecture
+                            logicielle.
+                        </p>
+
+                        <p class="about-text">
+                            Je m'intéresse particulièrement au
+                            développement Full Stack, à la Data Analysis,
+                            à la Business Intelligence et à l'intelligence
+                            artificielle.
+                        </p>
+
+
+                        <a
+                            href="#contact"
+                            class="text-link"
+                        >
+                            Discutons de votre projet
+                            <span>→</span>
+                        </a>
+
+                    </div>
+
+
+                    <!-- Stats -->
+
+                    <div class="about-stats">
+
+                        <div class="stat-item">
+
+                            <strong>3+</strong>
+
+                            <span>
+                                Projets réalisés
+                            </span>
+
+                        </div>
+
+                        <div class="stat-item">
+
+                            <strong>3</strong>
+
+                            <span>
+                                Domaines d'intérêt
+                            </span>
+
+                        </div>
+
+                        <div class="stat-item">
+
+                            <strong>100%</strong>
+
+                            <span>
+                                Motivation
+                            </span>
+
+                        </div>
+
+                    </div>
+
                 </div>
+
             </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SKILLS
+        ================================================== -->
+
+        <section
+            id="skills"
+            class="skills section"
+        >
+
+            <div class="container">
+
+                <div class="section-header">
+
+                    <span class="section-number">
+                        02
+                    </span>
+
+                    <div>
+
+                        <p class="section-label">
+                            Mes compétences
+                        </p>
+
+                        <h2 class="section-title">
+                            Technologies que
+                            <span>j'utilise.</span>
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="skills-grid">
+
+                    <!-- Frontend -->
+
+                    <article class="skill-item">
+
+                        <div class="skill-icon">
+                            &lt;/&gt;
+                        </div>
+
+                        <div class="skill-content">
+
+                            <h3>
+                                Frontend
+                            </h3>
+
+                            <p>
+                                HTML · CSS · JavaScript · Bootstrap
+                                · Vue.js · Angular
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Backend -->
+
+                    <article class="skill-item">
+
+                        <div class="skill-icon">
+                            { }
+                        </div>
+
+                        <div class="skill-content">
+
+                            <h3>
+                                Backend
+                            </h3>
+
+                            <p>
+                                PHP · Java · Spring Boot
+                                · REST API
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Database -->
+
+                    <article class="skill-item">
+
+                        <div class="skill-icon">
+                            DB
+                        </div>
+
+                        <div class="skill-content">
+
+                            <h3>
+                                Database
+                            </h3>
+
+                            <p>
+                                MySQL · PostgreSQL · SQL
+                                · PL/SQL
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Architecture -->
+
+                    <article class="skill-item">
+
+                        <div class="skill-icon">
+                            ⚙
+                        </div>
+
+                        <div class="skill-content">
+
+                            <h3>
+                                Architecture
+                            </h3>
+
+                            <p>
+                                Microservices · API Gateway
+                                · Eureka · Keycloak
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- DevOps -->
+
+                    <article class="skill-item">
+
+                        <div class="skill-icon">
+                            &gt;_
+                        </div>
+
+                        <div class="skill-content">
+
+                            <h3>
+                                DevOps
+                            </h3>
+
+                            <p>
+                                Docker · Jenkins · Nexus
+                                · CI/CD
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Data -->
+
+                    <article class="skill-item">
+
+                        <div class="skill-icon">
+                            ◫
+                        </div>
+
+                        <div class="skill-content">
+
+                            <h3>
+                                Data
+                            </h3>
+
+                            <p>
+                                Data Analysis · Business Intelligence
+                                · Data Visualization
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- AI -->
+
+                    <article class="skill-item">
+
+                        <div class="skill-icon">
+                            AI
+                        </div>
+
+                        <div class="skill-content">
+
+                            <h3>
+                                AI
+                            </h3>
+
+                            <p>
+                                Chatbots · AI Integration
+                                · Machine Learning
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Tools -->
+
+                    <article class="skill-item">
+
+                        <div class="skill-icon">
+                            ✦
+                        </div>
+
+                        <div class="skill-content">
+
+                            <h3>
+                                Tools
+                            </h3>
+
+                            <p>
+                                Git · GitHub · Postman
+                                · VS Code
+                            </p>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PROJECTS
+        ================================================== -->
+
+        <section
+            id="projects"
+            class="projects section"
+        >
+
+            <div class="container">
+
+                <div class="section-header">
+
+                    <span class="section-number">
+                        03
+                    </span>
+
+                    <div>
+
+                        <p class="section-label">
+                            Portfolio
+                        </p>
+
+                        <h2 class="section-title">
+                            Quelques projets
+                            <span>récents.</span>
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="projects-grid">
+
+
+                    <!-- =====================================
+                         TNCV
+                    ====================================== -->
+
+                    <article class="project-card featured">
+
+                        <div class="project-image">
+
+                            <div class="project-placeholder">
+
+                                <span class="project-number">
+                                    01
+                                </span>
+
+                                <div class="project-code">
+                                    <span>ATS</span>
+                                    <span>CV</span>
+                                    <span>AI</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="project-content">
+
+                            <div class="project-meta">
+
+                                <span>
+                                    Full Stack
+                                </span>
+
+                                <span>
+                                    Microservices
+                                </span>
+
+                            </div>
+
+                            <h3>
+                                TNCV
+                            </h3>
+
+                            <p>
+                                Plateforme intelligente dédiée à la
+                                création et à l'optimisation de CV
+                                compatibles ATS, avec traitement
+                                d'offres d'emploi et génération
+                                de contenu.
+                            </p>
+
+                            <div class="project-tech">
+
+                                <span>Spring Boot</span>
+                                <span>Angular</span>
+                                <span>PostgreSQL</span>
+                                <span>Keycloak</span>
+                                <span>MinIO</span>
+
+                            </div>
+
+                            <a
+                                href="#"
+                                class="project-link"
+                            >
+                                Voir le projet
+                                <span>↗</span>
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- =====================================
+                         WE CONNECT
+                    ====================================== -->
+
+                    <article class="project-card">
+
+                        <div class="project-image">
+
+                            <div class="project-placeholder">
+
+                                <span class="project-number">
+                                    02
+                                </span>
+
+                                <div class="project-code">
+                                    <span>WEB</span>
+                                    <span>CHAT</span>
+                                    <span>AI</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="project-content">
+
+                            <div class="project-meta">
+
+                                <span>
+                                    PFE
+                                </span>
+
+                                <span>
+                                    Web App
+                                </span>
+
+                            </div>
+
+                            <h3>
+                                We_Connect
+                            </h3>
+
+                            <p>
+                                Application web communautaire permettant
+                                aux utilisateurs d'échanger et de
+                                partager du contenu avec intégration
+                                d'un chatbot intelligent.
+                            </p>
+
+                            <div class="project-tech">
+
+                                <span>React</span>
+                                <span>Spring Boot</span>
+                                <span>REST API</span>
+                                <span>AI</span>
+
+                            </div>
+
+                            <a
+                                href="#"
+                                class="project-link"
+                            >
+                                Voir le projet
+                                <span>↗</span>
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- =====================================
+                         ELECTRIC POLES
+                    ====================================== -->
+
+                    <article class="project-card">
+
+                        <div class="project-image">
+
+                            <div class="project-placeholder">
+
+                                <span class="project-number">
+                                    03
+                                </span>
+
+                                <div class="project-code">
+                                    <span>MAP</span>
+                                    <span>GIS</span>
+                                    <span>DATA</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="project-content">
+
+                            <div class="project-meta">
+
+                                <span>
+                                    Dashboard
+                                </span>
+
+                                <span>
+                                    Data
+                                </span>
+
+                            </div>
+
+                            <h3>
+                                Gestion des poteaux électriques
+                            </h3>
+
+                            <p>
+                                Dashboard permettant de visualiser
+                                et gérer les poteaux électriques
+                                sur une carte interactive.
+                            </p>
+
+                            <div class="project-tech">
+
+                                <span>JavaScript</span>
+                                <span>Leaflet</span>
+                                <span>OpenStreetMap</span>
+                                <span>Dashboard</span>
+
+                            </div>
+
+                            <a
+                                href="#"
+                                class="project-link"
+                            >
+                                Voir le projet
+                                <span>↗</span>
+                            </a>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- =====================================
+                         LIBRARY HUB
+                    ====================================== -->
+
+                    <article class="project-card">
+
+                        <div class="project-image">
+
+                            <div class="project-placeholder">
+
+                                <span class="project-number">
+                                    04
+                                </span>
+
+                                <div class="project-code">
+                                    <span>BOOK</span>
+                                    <span>CRUD</span>
+                                    <span>WEB</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="project-content">
+
+                            <div class="project-meta">
+
+                                <span>
+                                    Web App
+                                </span>
+
+                                <span>
+                                    Dashboard
+                                </span>
+
+                            </div>
+
+                            <h3>
+                                LibraryHub
+                            </h3>
+
+                            <p>
+                                Application de gestion de bibliothèque
+                                avec interface web permettant de gérer
+                                les ressources et les données.
+                            </p>
+
+                            <div class="project-tech">
+
+                                <span>HTML</span>
+                                <span>CSS</span>
+                                <span>JavaScript</span>
+                                <span>PHP</span>
+                                <span>MySQL</span>
+
+                            </div>
+
+                            <a
+                                href="#"
+                                class="project-link"
+                            >
+                                Voir le projet
+                                <span>↗</span>
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CONTACT
+        ================================================== -->
+
+        <section
+            id="contact"
+            class="contact section"
+        >
+
+            <div class="container">
+
+                <div class="contact-wrapper">
+
+
+                    <div class="contact-content">
+
+                        <span class="section-number">
+                            04
+                        </span>
+
+                        <p class="section-label">
+                            Contact
+                        </p>
+
+                        <h2 class="contact-title">
+                            Construisons quelque chose
+                            <span>ensemble.</span>
+                        </h2>
+
+                        <p class="contact-description">
+                            Vous avez un projet, une opportunité
+                            d'alternance, un stage ou simplement
+                            envie d'échanger ?
+                            N'hésitez pas à me contacter.
+                        </p>
+
+
+                        <div class="contact-details">
+
+                            <a
+                                href="mailto:cherniaziz071@gmail.com"
+                                class="contact-item"
+                            >
+
+                                <span class="contact-icon">
+                                    @
+                                </span>
+
+                                <span>
+
+                                    <small>Email</small>
+
+                                    <strong>
+                                        cherniaziz071@gmail.com
+                                    </strong>
+
+                                </span>
+
+                            </a>
+
+
+                            <div class="contact-item">
+
+                                <span class="contact-icon">
+                                    ↗
+                                </span>
+
+                                <span>
+
+                                    <small>
+                                        Localisation
+                                    </small>
+
+                                    <strong>
+                                        Tunis, Tunisie
+                                    </strong>
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Contact form -->
+
+                    <div class="contact-form-container">
+
+                        <form
+                            id="contactForm"
+                            class="contact-form"
+                        >
+
+                            <div class="form-group">
+
+                                <label for="name">
+                                    Nom
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    placeholder="Votre nom"
+                                    autocomplete="name"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="email">
+                                    Email
+                                </label>
+
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    placeholder="votre@email.com"
+                                    autocomplete="email"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="subject">
+                                    Sujet
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="subject"
+                                    name="subject"
+                                    placeholder="Sujet du message"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="message">
+                                    Message
+                                </label>
+
+                                <textarea
+                                    id="message"
+                                    name="message"
+                                    rows="5"
+                                    placeholder="Votre message..."
+                                    required
+                                ></textarea>
+
+                            </div>
+
+
+                            <button
+                                type="submit"
+                                class="submit-btn"
+                            >
+                                <span>Envoyer le message</span>
+                                <span>→</span>
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <div class="container footer-container">
+
+            <div class="footer-brand">
+
+                <a href="#home" class="logo">
+                    <span>AZIZ</span>
+                    <small>CHERNI</small>
+                </a>
+
+                <p>
+                    Full Stack Developer · Data &amp; BI
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+
+            </div>
+
+
+            <p class="copyright">
+                © 2026 Mohamed Aziz Cherni. Tous droits réservés.
+            </p>
+
         </div>
+
     </footer>
 
-    <!-- 3D model -->
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.71/build/spline-viewer.js"></script>
 
-    <!-- GSAP Plugins -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
-    <script src="app.js"></script>
 </body>
 </html>
